@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主应用</title>
+</head>
+<body>
+    <h1>主应用</h1>
+    <button onclick="handleConsoleCookie()">主应用 - 打印 cookie</button>
+    <button onclick="handleLoadIframe()">加载 iframe 微应用</button>
+    <br />
+    <br />
+</body>
+<script>
+    function handleConsoleCookie() {
+      console.log("[主应用 - 打印 cookie]: ", document.cookie);
+      const iframe = document.querySelector('iframe');
+      const iframeDoc = iframe.contentDocument
+      console.log(iframe);
+      const h1Element = iframeDoc.querySelector('h1');
+      console.log(h1Element.textContent); // 输出 h1 元素的文本内容
+    }
+
+    function handleLoadIframe() {
+      const iframe = document.createElement('iframe');
+      // micro 变量填充: 指向微应用的打开地址
+      iframe.src = "<%= micro %>";
+      document.body.appendChild(iframe);
+    }
+  </script>
+</html>

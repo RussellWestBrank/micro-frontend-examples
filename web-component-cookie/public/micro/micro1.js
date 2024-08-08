@@ -58,6 +58,24 @@ class MicroApp1Element extends HTMLElement {
     $micro.textContent = "微应用1";
     // 将微应用的内容挂载到当前自定义元素下
     this.appendChild($micro);
+
+    // 新增 Ajax 请求，用于请求子应用服务
+    // 需要注意 micro1.js 动态加载在主应用 russ.com:4000 下，因此是跨站请求
+    
+    // 如果先发起 micro1.js 的 Ajax 请求，希望可以响应子应用服务端的 Cookie
+    // 再次发起 micro2.js 的同地址的 Ajax 请求，此时希望请求头中可以携带 Cookie
+    // 这种情况可用于登录态的免登 Cookie 设计
+    window
+      .fetch("https://10.23.100.168:3001/cors", {
+        method: "post",
+        // 允许在请求时携带 Cookie
+        // https://developer.mozilla.org/zh-CN/docs/Web/API/Request/credentials
+        credentials: "include"
+      })
+      .then((res) => res.json())
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   unmount() {
